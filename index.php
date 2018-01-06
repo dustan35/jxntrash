@@ -124,7 +124,7 @@
 		<div class="form-wrapper">
 			<form action="" method="post">
 				<div class="control">
-					<input type="text" class="input input--text" list="streets" name="street" placeholder="123 Main St" aria-label="Search for your street name" />
+					<input type="text" class="input input--text" list="streets" name="street" placeholder="Main St" aria-label="Search for your street name" />
 					<datalist id="streets">
 						<?php foreach($streets as $key => $street):
 							$bounds = explode(',', $street[3]);
