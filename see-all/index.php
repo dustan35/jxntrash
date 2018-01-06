@@ -15,6 +15,8 @@
 	<meta property="og:title" content="City of Jackson Garbage and Recycling Collection Schedule Finder" />
 	<meta property="og:url" content="https://vincefalconi.com/jxntrash" />
 	<meta property="og:image" content="https://www.vincefalconi.com/assets/img/jxntrash.jpg" />
+	<meta property="og:image:width" content="801" />
+	<meta property="og:image:height" content="801" />
 	<meta property="og:site_name" content="Jackson Garbage and Recycling Schedule Finder" />
 	<meta property="og:description" content="Find your street's garbage pickup days and recycling schedule" />
 	<meta property="og:locale" content="en_US" />
