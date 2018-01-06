@@ -1,0 +1,127 @@
+@import 'utils';
+@import 'normalize';
+@import 'colors';
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: $silver;
+	color: $black;
+	padding: rem(32);
+}
+
+a {
+	color: $navy;
+
+	&:hover { color: $blue; }
+}
+
+//	-----
+
+.container {
+	max-width: rem(600);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+//	-----
+
+.form-wrapper {
+	max-width: 75%;
+	margin-top: rem(32);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.control + .control {
+	margin-top: rem(16);
+}
+
+.input {
+	padding: rem(8);
+}
+
+.input--text {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.input--button {
+	background: $green;
+	color: $white;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid $olive;
+	cursor: pointer;
+}
+
+//	-----
+
+.page-heading {
+	text-align: center;
+	font-size: em(48);
+}
+
+//	-----
+
+.pickup-information {
+	max-width: rem(436);
+	margin-left: auto;
+	margin-right: auto;
+	box-sizing: border-box;
+	padding: rem(16);
+	border: 1px solid $black;
+	background: $olive;
+}
+
+.pickup-information-heading {
+	text-align: center;
+	font-size: em(24);
+	margin: 0;
+}
+
+.info-list {
+	margin-top: rem(16);
+}
+
+.info-list__heading {
+	font-weight: bold;
+	margin-bottom: rem(4);
+}
+
+.info-list__item {
+	margin-left: 0;
+}
+
+.info-list__item + .info-list__heading {
+	margin-top: rem(16);
+}
+
+.recycling-pickup-schedule {
+	list-style: none;
+	padding-left: 0;
+}
+
+//	-----
+
+.data-table {
+	border-collapse: collapse;
+	table-layout: fixed;
+	font-size: em(14);
+	width: 100%;
+}
+
+.header-cell {
+	text-align: left;
+}
+
+.location-bounds {
+	display: block;
+	margin-top: rem(8);
+	font-size: em(12, 14);
+	font-style: italic;
+}
+
+.data-row + .data-row { border-top: 1px solid $black; }
+
+.data-cell { padding: rem(16) 0; }
