@@ -42,9 +42,28 @@
 					}
 				}
 			}
+			elseif (strpos($data_street[0], $user_street) > -1)
+			{
+				//	not a perfect match, but it's a possible match. if we don't find a perfect match,
+				//	we'll show a list of possible matches. bonus: this works as fallback for browsers
+				//	that don't support the <datalist> element (which is far too many, imo)
+				$message = null;
+
+				$possible_matches[] = $data_street;
+
+				// modify the post recently added array element
+				$possible_matches[(count($possible_matches)-1)][2] = str_replace('&', ' and ', $possible_matches[(count($possible_matches)-1)][2]);
+				foreach ($recycling_schedules[$possible_matches[(count($possible_matches)-1)][1]] as $date)
+				{
+					if (time() < strtotime($date))
+					{
+						$possible_matches[(count($possible_matches)-1)]['recycling'][] = strtotime($date);
+					}
+				}
+			}
 		}
 
-		if (!isset($user_pickup))
+		if (!isset($user_pickup) AND !isset($possible_matches))
 		{
 			$message = 'Uh oh. We didn\'t find an entry for your street. Maybe try again, or call <a href="tel://601-960-0000">601-960-0000</a> to speak with the City of Jackson Solid Waste Division';
 		}
@@ -78,7 +97,6 @@
 	<meta name="twitter:image" content="https://www.vincefalconi.com/assets/img/jxntrash.jpg" />
 </head>
 <body>
-
 	<main class="container">
 
 		<h1 class="page-heading">Jackson Garbage Collection Schedule</h1>
@@ -114,6 +132,41 @@
 					</dd>
 				</dl>
 				<a href="./see-all">See all pickup schedules</a>
+			</article>
+		<?php elseif (isset($possible_matches)): ?>
+			<article class="pickup-information">
+				<h1 class="pickup-information-heading">Possible Matches for "<?=$input->post('street');?>"</h1>
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th class="header-cell">Street</th>
+							<th class="header-cell">Garbage Pickup Days</th>
+							<th class="header-cell">Next Recycling Pickup Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($possible_matches as $street):
+							if ($street[3] !== '')
+							{
+								$bounds = explode(',', $street[3]);
+								$bounds = array_map(function($val){
+									return ucwords($val);
+								}, $bounds);
+								$bounds = ' <span class="location-bounds">('.join(' to ', $bounds).')</span>';
+							}
+							else
+							{
+								$bounds = '';
+							}
+						?>
+							<tr class="data-row">
+								<td class="data-cell"><?=ucwords($street[0]).$bounds;?></td>
+								<td class="data-cell"><?=str_replace('&', ' and ', $street[2]);?></td>
+								<td class="data-cell"><?=date('F j, Y', $street['recycling'][0]);?></td>
+							</tr>
+						<?php endforeach ?>
+					</tbody>
+				</table>
 			</article>
 		<?php endif ?>
 
