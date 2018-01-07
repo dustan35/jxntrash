@@ -3,6 +3,51 @@
 	$streets = require_once('data/streets.php');
 	$recycling_schedules = require_once('data/recycling.php');
 
+
+
+
+	function normalizeStreets($street)
+	{
+		$abbreviations = [
+			'avenue'		=> 'av',
+			'boulevard' => 'blvd',
+			'circle' 		=> 'cir',
+			'court' 		=> 'ct',
+			'cove' 			=> 'cv',
+			'drive' 		=> 'dr',
+			'highway' 	=> 'hwy',
+			'lane' 			=> 'ln',
+			'park' 			=> 'pk',
+			'parkway'		=> 'pkwy',
+			'place' 		=> 'pl',
+			'point'			=> 'pt',
+			'road'			=> 'rd',
+			'square'		=> 'sq',
+			'street'		=> 'st',
+			'terrace'		=> 'ter',
+			'trace'			=> 'tr',
+		];
+
+		//	remove numbers at the beginning of the street address, because they aren't helpful
+		if ($street !== '18 pl' AND $street !== '18 place')
+		{
+			//	except for "18 Pl", because it is a real street in our dataset,
+			//	and the only one that starts with a number
+			$street = preg_replace('/^([0-9]+)\s/', '', $street);
+		}
+
+		//	standardize street abbreviations
+		foreach($abbreviations as $term => $abbr)
+		{
+			$street = str_replace($term, $abbr, $street);
+		}
+
+		return $street;
+	}
+
+
+
+
 	$input = new UserInput();
 
 	$message = 'New in town? Just moved in? Housesitting? Just can\'t remember when the city picks up garbage and recycling? Search for your street and we\'ll do our best to tell you when to take your bins to the curb.';
@@ -24,6 +69,9 @@
 			$user_street = strtolower(trim($input->post('street')));
 			$boundaries = '';
 		}
+
+		//	normalize street terms
+		$user_street = normalizeStreets($user_street);
 
 		foreach($streets as $data_street)
 		{
